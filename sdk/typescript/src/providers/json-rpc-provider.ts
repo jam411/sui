@@ -47,6 +47,10 @@ import {
   CoinMetadataStruct,
   GetObjectDataResponse,
   GetOwnedObjectsResponse,
+  DelegatedStake,
+  ValidatorMetadata,
+  CommitteeInfoResponse,
+  SuiSystemState
 } from '../types';
 import {
   PublicKey,
@@ -754,6 +758,60 @@ export class JsonRpcProvider extends Provider {
       throw new Error(
         `Error dry running transaction with request type: ${err}`
       );
+    }
+  }
+
+  async getDelegatedStakes(address: SuiAddress): Promise<DelegatedStake> {
+    try {
+      const resp = await this.client.requestWithType(
+        'sui_getDelegatedStakes',
+        [address],
+        DelegatedStake,
+        this.options.skipDataValidation
+      );
+      return resp;
+    } catch (err) {
+      throw new Error (`Error get delegated stakes with request type: ${err}`);
+    }
+  }
+
+  async getValidators(): Promise<ValidatorMetadata> {
+    try {
+      const resp = await this.client.requestWithType(
+        'sui_getValidators',
+        ValidatorMetadata,
+        this.options.skipDataValidation
+      );
+      return resp;
+    } catch (err) {
+      throw new Error (`Error get validators with request type: ${err}`);
+    }
+  }
+
+  async getCommitteeInfo(epoch: Option<EpochId>): Promise<CommitteeInfoResponse> {
+    try {
+      const resp = await this.client.requestWithType(
+        'sui_getCommitteeInfo',
+        [epoch],
+        CommitteeInfoResponse,
+        this.options.skipDataValidation
+      );
+      return resp;
+    } catch (err) {
+      throw new Error (`Error get committee info with request type: ${err}`);
+    }
+  }
+
+  async getSuiSystemState(): Promise<SuiSystemState> {
+    try {
+      const resp = await this.client.requestWithType(
+        'sui_getSuiSystemState',
+        SuiSystemState,
+        this.options.skipDataValidation
+      );
+      return resp;
+    } catch (err) {
+      throw new Error (`Error get sui system state with request type: ${err}`);
     }
   }
 }

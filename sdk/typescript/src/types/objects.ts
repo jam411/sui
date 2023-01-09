@@ -243,3 +243,17 @@ export function getMovePackageContent(
   }
   return (suiObject.data as SuiMovePackage).disassembled;
 }
+
+export const DelegatedStake = object({
+  transactionEffectsDigest: string(),
+});
+
+export const ValidatorMetadata = object({
+  transactionEffectsDigest: string(),
+});
+export const CommitteeInfoResponse = object({
+  transactionEffectsDigest: string(),
+});
+export const SuiSystemState = object({
+  transactionEffectsDigest: string(),
+});
